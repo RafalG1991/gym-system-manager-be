@@ -4,7 +4,10 @@ import 'express-async-errors';
 import * as cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import 'dotenv/config';
-// import * as passport from 'passport';
+import * as passport from 'passport';
+import { strategy } from './utils/passport';
+
+passport.use(strategy);
 
 const app = express();
 
