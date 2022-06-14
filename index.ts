@@ -7,6 +7,7 @@ import 'dotenv/config';
 import * as passport from 'passport';
 import { strategy } from './utils/passport';
 import { handleError } from './utils/errors';
+import { userRouter } from './routes/user';
 
 passport.use(strategy);
 
@@ -27,6 +28,8 @@ app.use(rateLimit({
 app.get('/', (req, res) => {
   res.json({ message: 'Test' });
 });
+
+app.use('/user', userRouter);
 
 app.use(handleError);
 
