@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import 'dotenv/config';
 import * as passport from 'passport';
 import { strategy } from './utils/passport';
+import { handleError } from './utils/errors';
 
 passport.use(strategy);
 
@@ -26,6 +27,8 @@ app.use(rateLimit({
 app.get('/', (req, res) => {
   res.json({ message: 'Test' });
 });
+
+app.use(handleError);
 
 app.listen(3000, 'localhost', () => {
   console.log('Server is running on http://localhost:3000');
