@@ -22,11 +22,14 @@ export class UserRecord implements UserEntity {
     if (!userObj.email || userObj.email.trim().length === 0 || userObj.email.length > 320 || !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(userObj.email)) {
       throw new ValidationError('Provide valid email');
     }
-    if (userObj.password.length < 8) {
+    if (!userObj.password || userObj.password.length < 8) {
       throw new ValidationError('Password must be at least 8 characters');
     }
 
-    if (userObj.firstname.trim().length === 0 || userObj.lastname.trim().length === 0) {
+    if (
+      !userObj.firstname || !userObj.lastname
+      || userObj.firstname.trim().length === 0 || userObj.lastname.trim().length === 0
+    ) {
       throw new ValidationError('Provide your first name and last name');
     }
 

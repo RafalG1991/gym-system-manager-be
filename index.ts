@@ -33,6 +33,6 @@ app.use('/user', userRouter);
 
 app.use(handleError);
 
-app.listen(3000, 'localhost', () => {
+app.listen(3001, 'localhost', () => {
   console.log('Server is running on http://localhost:3000');
 });
