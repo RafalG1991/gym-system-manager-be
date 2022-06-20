@@ -7,6 +7,7 @@ import 'dotenv/config';
 import * as passport from 'passport';
 import { strategy } from './utils/passport';
 import { handleError } from './utils/errors';
+import { userRouter } from './routes/user';
 
 passport.use(strategy);
 
@@ -28,8 +29,10 @@ app.get('/', (req, res) => {
   res.json({ message: 'Test' });
 });
 
+app.use('/user', userRouter);
+
 app.use(handleError);
 
-app.listen(3000, 'localhost', () => {
+app.listen(3001, 'localhost', () => {
   console.log('Server is running on http://localhost:3000');
 });

@@ -1,12 +1,12 @@
 import * as jsonwebtoken from 'jsonwebtoken';
 import { Strategy } from 'passport-jwt';
 import * as passport from 'passport';
-import { NextFunction, Request, Response } from 'express';
-// import { UserRecord } from '../records/user.record';
+import { Request } from 'express';
+import { UserEntity } from '../types';
 
-export const issueJWT = () => {
+export const issueJWT = (user: UserEntity) => {
   const payload = {
-    sub: 'abc',
+    sub: user.id,
     iat: Date.now(),
   };
   const expiresIn = '15m';
@@ -26,7 +26,6 @@ const cookieExtractor = (req: Request) => {
 };
 
 const options = {
-  // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   jwtFromRequest: cookieExtractor,
   secretOrKey: process.env.JWT_ACCESS,
   algorithm: ['HS256'],
@@ -44,30 +43,4 @@ export const strategy = new Strategy(options, async (token, done) => {
   }
 });
 
-// export const strategy = new Strategy(options, (payload, done) => {
-//   UserRecord.getOne(payload.sub)
-//     .then((user) => {
-//       if (user) return done(null, user.id);
-//       return done(null, false);
-//     })
-//     .catch((err) => done(err, null));
-// });
-
-interface SubRequest extends Request {
-  user: {
-    sub: string,
-    iat: number,
-    exp: number
-  }
-}
-
 export const verifyUser = passport.authenticate('jwt', { session: false });
-export const isAdmin = async (req: SubRequest, res: Response, next: NextFunction) => {
-  const user = { user: 'testowy', email: 'admin@admin.com' };
-  if (user.email === 'admin@admin.com') {
-    return next();
-  }
-  return res
-    .status(403)
-    .json({ err: 'Access denied' });
-};
