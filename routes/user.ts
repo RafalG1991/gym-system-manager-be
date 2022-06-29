@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { UserRecord } from '../records/user.record';
 import { issueJWT, verifyUser } from '../utils/passport';
 import { checkPassword } from '../utils/bcrypt';
-import { UserAuthRequest } from '../types';
+import { UserAuthRequest, UserDataResponse } from '../types';
 
 export const userRouter = Router();
 
@@ -44,5 +44,7 @@ userRouter
   })
   .get('/data', verifyUser, async (req: UserAuthRequest, res) => {
     const user = await UserRecord.getOneById(req.user.sub);
-    res.json({ email: user.email, firstName: user.firstname, lastName: user.lastname });
+    res.json({
+      email: user.email, firstname: user.firstname, lastname: user.lastname,
+    } as UserDataResponse);
   });

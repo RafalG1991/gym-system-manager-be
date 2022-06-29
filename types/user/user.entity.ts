@@ -17,3 +17,9 @@ interface UserPayload {
 export interface UserAuthRequest extends Request {
   user: UserPayload;
 }
+
+export interface UserDataResponse {
+  email: string;
+  firstname?: string;
+  lastname?: string;
+}
