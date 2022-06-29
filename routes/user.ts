@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UserRecord } from '../records/user.record';
 import { issueJWT, verifyUser } from '../utils/passport';
 import { checkPassword } from '../utils/bcrypt';
+import { UserAuthRequest } from '../types';
 
 export const userRouter = Router();
 
@@ -31,13 +32,17 @@ userRouter
         .status(200)
         .cookie('authToken', token, {
           httpOnly: true,
-          expires: new Date(Date.now() + 1000 * 60 * 15),
+          expires: new Date(Date.now() + 1000 * 60 * 5),
         })
         .json({ sub: user.id, expires });
     }
     return res.status(401).json({ err: 'Invalid data' });
   })
-  .get('/me', verifyUser, (req, res) => {
+  .get('/me', verifyUser, (req: UserAuthRequest, res) => {
     res
       .json(req.user);
+  })
+  .get('/data', verifyUser, async (req: UserAuthRequest, res) => {
+    const user = await UserRecord.getOneById(req.user.sub);
+    res.json({ email: user.email, firstName: user.firstname, lastName: user.lastname });
   });
