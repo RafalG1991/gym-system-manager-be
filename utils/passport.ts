@@ -9,7 +9,7 @@ export const issueJWT = (user: UserEntity) => {
     sub: user.id,
     iat: Date.now(),
   };
-  const expiresIn = '15m';
+  const expiresIn = '5m';
   const signedToken = jsonwebtoken.sign(payload, process.env.JWT_ACCESS, { expiresIn });
   return {
     token: `Bearer ${signedToken}`,
