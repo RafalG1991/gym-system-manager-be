@@ -61,6 +61,12 @@ userRouter
     }
     if (req.body.password) {
       user.password = req.body.password;
+      const id = await user.changePassword();
+      return res
+        .status(200)
+        .json({ id });
     }
-    return res.status(401);
+    return res
+      .status(401)
+      .json({ err: 'Invalid data' });
   });

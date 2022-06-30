@@ -73,14 +73,25 @@ export class UserRecord implements UserEntity {
       throw new ValidationError('Provide your first name and last name');
     }
 
-    if (!this.password || this.password.length < 8) {
-      throw new ValidationError('Password must be at least 8 characters');
-    }
-
     await pool.execute('UPDATE `users` SET `firstname` = :firstname, `lastname` = :lastname WHERE `id` = :id', {
       id: this.id,
       firstname: this.firstname,
       lastname: this.lastname,
+    });
+
+    return this.id;
+  }
+
+  async changePassword(): Promise<string> {
+    if (!this.password || this.password.length < 8) {
+      throw new ValidationError('Password must be at least 8 characters');
+    }
+
+    this.password = await hashPassword(this.password);
+
+    await pool.execute('UPDATE `users` SET `password` = :password WHERE `id` = :id', {
+      id: this.id,
+      password: this.password,
     });
 
     return this.id;
