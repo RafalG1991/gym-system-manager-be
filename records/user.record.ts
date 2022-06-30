@@ -26,13 +26,6 @@ export class UserRecord implements UserEntity {
       throw new ValidationError('Password must be at least 8 characters');
     }
 
-    if (
-      !userObj.firstname || !userObj.lastname
-      || userObj.firstname.trim().length === 0 || userObj.lastname.trim().length === 0
-    ) {
-      throw new ValidationError('Provide your first name and last name');
-    }
-
     this.id = userObj.id;
     this.email = userObj.email;
     this.password = userObj.password;
@@ -70,5 +63,26 @@ export class UserRecord implements UserEntity {
       email,
     }) as UserRecordResults;
     return results.length === 0 ? null : new UserRecord(results[0]);
+  }
+
+  async updateName(): Promise<string> {
+    if (
+      !this.firstname || !this.lastname
+      || this.firstname.trim().length === 0 || this.lastname.trim().length === 0
+    ) {
+      throw new ValidationError('Provide your first name and last name');
+    }
+
+    if (!this.password || this.password.length < 8) {
+      throw new ValidationError('Password must be at least 8 characters');
+    }
+
+    await pool.execute('UPDATE `users` SET `firstname` = :firstname, `lastname` = :lastname WHERE `id` = :id', {
+      id: this.id,
+      firstname: this.firstname,
+      lastname: this.lastname,
+    });
+
+    return this.id;
   }
 }

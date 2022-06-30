@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import passport from 'passport';
 import { UserRecord } from '../records/user.record';
 import { issueJWT, verifyUser } from '../utils/passport';
 import { checkPassword } from '../utils/bcrypt';
@@ -47,4 +48,19 @@ userRouter
     res.json({
       email: user.email, firstname: user.firstname, lastname: user.lastname,
     } as UserDataResponse);
+  })
+  .patch('/', verifyUser, async (req: UserAuthRequest, res) => {
+    const user = await UserRecord.getOneById(req.user.sub);
+    if (req.body.lastname && req.body.firstname) {
+      user.firstname = req.body.firstname;
+      user.lastname = req.body.lastname;
+      const id = await user.updateName();
+      return res
+        .status(200)
+        .json({ id });
+    }
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    return res.status(401);
   });
