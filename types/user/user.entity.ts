@@ -6,6 +6,9 @@ export interface UserEntity {
   password: string;
   firstname?: string;
   lastname?: string;
+  weight?: string;
+  height?: string;
+  memberSince: string;
 }
 
 interface UserPayload {
@@ -22,4 +25,7 @@ export interface UserDataResponse {
   email: string;
   firstname?: string;
   lastname?: string;
+  weight?: string;
+  height?: string;
+  memberSince: string;
 }
