@@ -4,11 +4,12 @@ export interface UserEntity {
   id: string;
   email: string;
   password: string;
-  firstname?: string;
-  lastname?: string;
-  weight?: string;
-  height?: string;
+  firstname: string;
+  lastname: string;
+  weight: string;
+  height: string;
   memberSince: string;
+  membershipDate: string;
 }
 
 interface UserPayload {
@@ -28,4 +29,5 @@ export interface UserDataResponse {
   weight?: string;
   height?: string;
   memberSince: string;
+  membershipDate: string;
 }

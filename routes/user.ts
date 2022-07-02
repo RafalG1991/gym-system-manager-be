@@ -81,4 +81,18 @@ userRouter
     return res
       .status(401)
       .json({ err: 'Invalid data' });
+  })
+  .patch('/membership', verifyUser, async (req: UserAuthRequest, res) => {
+    try {
+      const user = await UserRecord.getOneById(req.user.sub);
+      const id = await user.extendMembership();
+      return res
+        .status(200)
+        .json({ id });
+    } catch (e) {
+      console.log(e);
+      return res
+        .status(401)
+        .json({ err: 'Invalid data' });
+    }
   });
