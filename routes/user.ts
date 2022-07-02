@@ -51,6 +51,7 @@ userRouter
       height: user.height,
       weight: user.weight,
       memberSince: user.memberSince,
+      membershipDate: user.membershipDate,
     } as UserDataResponse);
   })
   .patch('/', verifyUser, async (req: UserAuthRequest, res) => {
