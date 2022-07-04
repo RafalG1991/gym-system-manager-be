@@ -86,7 +86,7 @@ userRouter
   .patch('/membership', verifyUser, async (req: UserAuthRequest, res) => {
     try {
       const user = await UserRecord.getOneById(req.user.sub);
-      const id = await user.extendMembership();
+      const id = await user.extendMembership(req.body.months);
       return res
         .status(200)
         .json({ id });

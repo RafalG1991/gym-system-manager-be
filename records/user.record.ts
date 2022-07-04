@@ -128,14 +128,17 @@ export class UserRecord implements UserEntity {
     return this.id;
   }
 
-  async extendMembership(): Promise<string> {
-    const date = new Date();
+  async extendMembership(months: number): Promise<string> {
+    let date = new Date();
     if (this.membershipDate) {
       if (new Date(this.membershipDate) < date) {
-        date.setMonth(date.getMonth() + 1);
+        date.setMonth(date.getMonth() + months);
       } else {
-        date.setMonth((new Date(this.membershipDate)).getMonth() + 1);
+        date = new Date(this.membershipDate);
+        date.setMonth(new Date(this.membershipDate).getMonth() + months);
       }
+    } else {
+      date.setMonth(date.getMonth() + months);
     }
 
     await pool.execute('UPDATE `users` SET `membershipDate` = :membershipDate WHERE `id` = :id', {
