@@ -14,15 +14,17 @@ export class UserRecord implements UserEntity {
 
   public password: string;
 
-  public firstname?: string;
+  public firstname: string;
 
-  public lastname?: string;
+  public lastname: string;
 
-  public weight?: string;
+  public weight: string;
 
-  public height?: string;
+  public height: string;
 
   public memberSince: string;
+
+  public membershipDate: string;
 
   constructor(userObj: UserEntity) {
     if (!userObj.email || userObj.email.trim().length === 0 || userObj.email.length > 320 || !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(userObj.email)) {
@@ -40,27 +42,20 @@ export class UserRecord implements UserEntity {
     this.height = userObj.height;
     this.weight = userObj.weight;
     this.memberSince = userObj.memberSince;
+    this.membershipDate = userObj.membershipDate;
   }
 
   async addOne(): Promise<string> {
     if (!this.id) {
       this.id = uuid();
     }
-    this.firstname = null;
-    this.lastname = null;
-    this.height = null;
-    this.weight = null;
 
     this.password = await hashPassword(this.password);
 
-    await pool.execute('INSERT INTO `users`(`id`, `email`, `password`, `firstname`, `lastname`, `height`, `weight`) VALUES (:id, :email, :password, :firstname, :lastname, :height, :weight)', {
+    await pool.execute('INSERT INTO `users`(`id`, `email`, `password`) VALUES (:id, :email, :password)', {
       id: this.id,
       email: this.email,
       password: this.password,
-      firstname: this.firstname,
-      lastname: this.lastname,
-      height: this.height,
-      weight: this.weight,
     });
 
     return this.id;
@@ -128,6 +123,27 @@ export class UserRecord implements UserEntity {
     await pool.execute('UPDATE `users` SET `password` = :password WHERE `id` = :id', {
       id: this.id,
       password: this.password,
+    });
+
+    return this.id;
+  }
+
+  async extendMembership(months: number): Promise<string> {
+    let date = new Date();
+    if (this.membershipDate) {
+      if (new Date(this.membershipDate) < date) {
+        date.setMonth(date.getMonth() + months);
+      } else {
+        date = new Date(this.membershipDate);
+        date.setMonth(new Date(this.membershipDate).getMonth() + months);
+      }
+    } else {
+      date.setMonth(date.getMonth() + months);
+    }
+
+    await pool.execute('UPDATE `users` SET `membershipDate` = :membershipDate WHERE `id` = :id', {
+      id: this.id,
+      membershipDate: date,
     });
 
     return this.id;
