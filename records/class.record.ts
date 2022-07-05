@@ -75,4 +75,9 @@ export class ClassRecord implements ClassEntity {
 
     return this.id;
   }
+
+  static async getAll(): Promise<ClassRecord[] | null> {
+    const [results] = await pool.execute('SELECT * FROM `classes`') as ClassRecordResults;
+    return results.length === 0 ? null : results.map((result) => new ClassRecord(result));
+  }
 }
