@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { FieldPacket } from 'mysql2';
-import { ClassEntity, DayOfTheWeek } from '../types';
+import { ClassEntity } from '../types';
 import { ValidationError } from '../utils/errors';
 import { pool } from '../utils/db';
 
@@ -17,7 +17,7 @@ export class ClassRecord implements ClassEntity {
 
   public ends: string;
 
-  public day: DayOfTheWeek;
+  public day: number;
 
   constructor(classObj: ClassEntity) {
     if (!classObj.name
@@ -45,10 +45,10 @@ export class ClassRecord implements ClassEntity {
     }
 
     if (!classObj.day
-      || classObj.day.trim().length === 0
-      || !(classObj.day.toUpperCase() in DayOfTheWeek)
+      || classObj.day < 0
+      || classObj.day > 6
     ) {
-      throw new ValidationError('Provide valid day of the week');
+      throw new ValidationError('Provide valid day of the week number');
     }
 
     this.id = classObj.id;
