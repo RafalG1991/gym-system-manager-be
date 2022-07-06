@@ -44,8 +44,7 @@ export class ClassRecord implements ClassEntity {
       throw new ValidationError('Provide valid end time');
     }
 
-    if (!classObj.day
-      || classObj.day < 0
+    if (classObj.day < 0
       || classObj.day > 6
     ) {
       throw new ValidationError('Provide valid day of the week number');
