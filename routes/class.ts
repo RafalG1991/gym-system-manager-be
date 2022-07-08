@@ -12,9 +12,16 @@ classRouter
       startTime: item.starts,
       endTime: item.ends,
       daysOfWeek: [item.day],
-      url: `class/${item.id}`,
+      url: `${item.id}`,
     }));
     return res
       .status(200)
       .json(response);
+  })
+  .get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const event = await ClassRecord.getOneById(id);
+    return res
+      .status(200)
+      .json(event);
   });
