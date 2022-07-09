@@ -8,6 +8,7 @@ import * as passport from 'passport';
 import { strategy } from './utils/passport';
 import { handleError } from './utils/errors';
 import { userRouter } from './routes/user';
+import { classRouter } from './routes/class';
 
 passport.use(strategy);
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/class', classRouter);
 
 app.use(handleError);
 
