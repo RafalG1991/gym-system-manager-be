@@ -5,6 +5,7 @@ import * as cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import 'dotenv/config';
 import * as passport from 'passport';
+import { Router } from 'express';
 import { strategy } from './utils/passport';
 import { handleError } from './utils/errors';
 import { userRouter } from './routes/user';
@@ -30,8 +31,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'Test' });
 });
 
-app.use('/user', userRouter);
-app.use('/class', classRouter);
+const router = Router();
+
+app.use('/api', router);
+
+router.use('/user', userRouter);
+router.use('/class', classRouter);
 
 app.use(handleError);
 
