@@ -32,14 +32,14 @@ export class ClassRecord implements ClassEntity {
     }
     if (!classObj.starts
       || classObj.starts.trim().length === 0
-      || /^(0?[1-9]|1[0-2]):[0-5][0-9]$/.test(classObj.starts)
+      || !/^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(classObj.starts)
     ) {
       throw new ValidationError('Provide valid start time');
     }
 
     if (!classObj.ends
       || classObj.ends.trim().length === 0
-      || /^(0?[1-9]|1[0-2]):[0-5][0-9]$/.test(classObj.ends)
+      || !/^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(classObj.ends)
     ) {
       throw new ValidationError('Provide valid end time');
     }
