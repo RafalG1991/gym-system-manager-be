@@ -1,8 +1,14 @@
 # GYM System Manager Project
 
-Gym management web application that allows you to support clients accounts, gym passes and gym classes life schedule. Track upcoming events, calculate your BMI, check your membership status and prolong your gym pass.
+Gym management web application that allows you to support clients accounts, gym passes and gym classes live schedule. Track upcoming events, calculate your BMI, check your membership status and prolong your gym pass.
 
-This is the backend part of the project with REST API. To see the frontkend part visit: https://github.com/RafalG1991/gym-system-manager-fe
+This is the backend part of the project with REST API. To see the frontend part visit: https://github.com/RafalG1991/gym-system-manager-fe
+
+### **To run this project make sure you have created .env file for db credentials: [.env structure](https://github.com/RafalG1991/gym-system-manager-be/blob/main/example_env.txt) and configured the mysql database with this [ structure](https://github.com/RafalG1991/gym-system-manager-be/blob/main/database_structure.md)**
+
+## Live preview
+
+https://rg.networkmanager.pl/
 
 ## Tech stack
 
