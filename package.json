@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/RafalG1991/gym-system-manager-be#readme",
   "dependencies": {
-    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
