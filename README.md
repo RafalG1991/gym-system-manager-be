@@ -1,16 +1,23 @@
-# GYM System Manager Project
+<!--
+Thanks for using the template!
 
-Gym management web application that allows you to support clients accounts, gym passes and gym classes live schedule. Track upcoming events, calculate your BMI, check your membership status and prolong your gym pass.
+Don't forget to give this project a star for additional support ;)
+Maybe you can mention me or this repo in the acknowledgements too
+-->
+<div align="center">
+  <h1>GYM System Manager Project</h1>
+  <p>Gym management web application that allows you to support clients accounts, gym passes and gym classes live schedule. Track upcoming events, calculate your BMI, check your membership status and prolong your gym pass.</p>
+</div>
 
 This is the backend part of the project with REST API. To see the frontend part visit: https://github.com/RafalG1991/gym-system-manager-fe
 
 ### **To run this project make sure you have created .env file for db credentials: [.env structure](https://github.com/RafalG1991/gym-system-manager-be/blob/main/example_env.txt) and configured the mysql database with this [ structure](https://github.com/RafalG1991/gym-system-manager-be/blob/main/database_structure.md)**
 
-## Live preview
+## 💡 Live preview
 
-https://rg.networkmanager.pl/
+[GYM System Manager live preview](https://rg.networkmanager.pl/)
 
-## Tech stack
+## ⚙️ Tech stack
 
 #### frontend
 - React with TypeScript
@@ -24,7 +31,7 @@ https://rg.networkmanager.pl/
 - passport with JWT authentication
 - Jest for unit tests
 
-## About development
+## 📝 About development
 
 In this project, for backend, I used Node.js with Express framework. For authentication and authorization support I used passport middleware with JSON Web Token and custom passport strategy.
 
@@ -34,46 +41,121 @@ User and class records are handled using Active Record pattern. Each class provi
 
 Routing is divided into two routes - user and class related. Most of the user routes are available only after authorization using verifyUser middleware. 
 
-### `POST api/user/signup`
+## :dart: API endpoints documentation
 
-sign up route that checks for unique e-mail, adds new user to the database and returns httpOnly Cookie with user jwt token payload
+### USER
+#### `POST api/user/signup`
 
-### `POST api/user/login`
+<p> 
+  Sign up route that checks for unique e-mail, adds new user to the database and returns httpOnly Cookie with user jwt token payload
+</p>
+<p>
+Accepting JSON:
 
-sign in route that verify user data and bcrypt hashed password and returns httpOnly Cookie with user jwt token payload
+```javascript
+{
+  "email": string,
+  "password": string
+}
+```
+</p>
 
-### `GET api/user/me`
+#### `POST api/user/login`
 
-endpoint for checking the authentication status. Returns user payload extracted from cookie, otherwise returns error message which is handled by frontend
+<p> 
+  Sign in route that verify user data and bcrypt hashed password and returns httpOnly Cookie with user jwt token payload
+</p>
+<p>
+Accepting JSON:
 
-### `GET api/user/data`
+```javascript
+{
+  "email": string,
+  "password": string
+}
+```
+</p>
 
-returns user data for the frontend
+#### `GET api/user/me`
 
-### `PATCH api/user/`
+<p> 
+Endpoint for checking the authentication status. Returns user payload extracted from cookie, otherwise returns error message which is handled by frontend
+</p>
 
-changing user data route that handles name, bmi and password updating
+#### `GET api/user/data`
 
-### `PATCH api/user/membership`
+<p> 
+Returns user data for the frontend
+</p>
 
-endpoint for extending membership status
+#### `PATCH api/user/`
+
+<p> 
+  Changing user data route that handles name, bmi and password updating. Can handle three different data sets: firstname and lastname, password or height and weight as in the following example:
+</p>
+<p>
+Accepting JSON:
+
+```javascript
+{
+  "firstname": string,
+  "lastname": string
+}
+```
+OR
+```javascript
+{
+  "password": string
+
+}
+```
+OR
+```javascript
+{
+  "height": string,
+  "weight": string
+}
+```
+</p>
 
 
+#### `PATCH api/user/membership`
+
+<p> 
+  Endpoint for extending membership status by the number of months provided in the body
+</p>
+<p>
+Accepting JSON:
+
+```javascript
+{
+  "months": number
+}
+```
+</p>
+
+### CLASS
+<p> 
 Class routes are intentionally available without any kind of authorization. It can be used in the future for gym classes schedule on the home page
+</p>
 
-### `GET api/class`
+#### `GET api/class`
 
-returns all classes in json format with structure that is handled by react fullcalendar component
+<p> 
+Returns all classes in json format with structure that is handled by react fullcalendar component
+</p>
 
-### `GET api/class/:id`
+#### `GET api/class/:id`
 
-returns single class by id passed in param
+<p> 
+Returns single class by id passed in param
+</p>
 
-## Tests
+## 🎛 Tests
 
 The project was supplied with Jest tests for class record and user record validation
 
-## Available Scripts
+## 💾 Available Scripts
 
 In the project directory, you can run:
 
