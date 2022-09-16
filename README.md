@@ -5,6 +5,7 @@ Don't forget to give this project a star for additional support ;)
 Maybe you can mention me or this repo in the acknowledgements too
 -->
 <div align="center">
+  <img src="https://user-images.githubusercontent.com/92755273/190659291-ac953a00-e0a6-41ac-b2f6-bd6a559c0728.png" alt="logo">
   <h1>GYM System Manager Project</h1>
   <p>Gym management web application that allows you to support clients accounts, gym passes and gym classes live schedule. Track upcoming events, calculate your BMI, check your membership status and prolong your gym pass.</p>
 </div>
